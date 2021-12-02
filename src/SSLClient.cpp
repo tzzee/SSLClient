@@ -337,7 +337,7 @@ int SSLClient::m_start_ssl(const char* host, SSLSession* ssl_ses) {
     uint8_t rng_seeds[16];
     // take the bottom 8 bits of the analog read
     for (uint8_t i = 0; i < sizeof rng_seeds; i++) 
-        rng_seeds[i] = static_cast<uint8_t>(analogRead(m_analog_pin));
+        rng_seeds[i] = static_cast<uint8_t>(0<=m_analog_pin ? analogRead(m_analog_pin) : random(256));
     br_ssl_engine_inject_entropy(&m_sslctx.eng, rng_seeds, sizeof rng_seeds);
     // inject session parameters for faster reconnection, if we have any
     if(ssl_ses != nullptr) {
